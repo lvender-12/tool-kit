@@ -3,7 +3,10 @@ use std::{
     io::{Error, Read, Write, stdin, stdout},
 };
 
+use config::{Config, FileFormat};
 use dialoguer::Input;
+
+use crate::model::config_model::ConfigModel;
 
 pub fn question(question: &str) -> String {
     let result: String = Input::new()
@@ -27,4 +30,15 @@ pub fn back() {
     stdout().flush().unwrap();
 
     stdin().read_line(&mut input).unwrap();
+}
+
+pub fn config() -> ConfigModel {
+    let config: ConfigModel = Config::builder()
+        .add_source(config::File::new("config.toml", FileFormat::Toml))
+        .build()
+        .unwrap()
+        .try_deserialize()
+        .unwrap();
+
+    config
 }

@@ -7,7 +7,8 @@ use reqwest::StatusCode;
 use crate::utils::util;
 
 pub async fn run() {
-    let path = "/home/lvender/tools/SecList/Discovery/Web-Content/common.txt";
+    let config = util::config();
+    let path = &config.dirsearch_text;
 
     let lines = match util::parse_buffer(path) {
         Ok(lines) => lines,
